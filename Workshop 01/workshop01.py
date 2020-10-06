@@ -1,7 +1,9 @@
 import numpy as np
 
-m = 1;
-J = np.eye(3)
+m = 1
+J1 = 0.1*np.ones((3,3))
+J2 = 0.9*np.eye(3)
+J = J1 + J2
 # note --> q = cos(th/2) + u*sin(th/2), u = axis, th = angle
 
 class RigidBody:
