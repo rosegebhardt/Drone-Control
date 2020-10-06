@@ -22,11 +22,11 @@ x = np.concatenate([x_1,x_2,x_3,x_4])
 # Input force
 # First part
 u1 = np.zeros((6,1))
-u1[0] = 2
-u1[1] = 1
-u1[2] = 0
-u1[3] = 1
-u1[4] = 0
+u1[0] = 0.5
+u1[1] = 2
+u1[2] = 1
+u1[3] = 0
+u1[4] = 1
 u1[5] = 0
 # Turn off input
 u2 = np.zeros((6,1))
@@ -51,12 +51,9 @@ for i in range(n):
     t_history.append(t)
     x_history.append(x)
 
-x2 = np.array(x_history)
-x2 = x2[-1,:]
-
 # While no force is applied
 for i in range(n,2*n):
-    x = integrator.step(t_history[-1], x2, u2)
+    x = integrator.step(t_history[-1], x, u2)
     t = (i+1) * dt
 
     t_history.append(t)
@@ -69,8 +66,18 @@ t_his = np.array(t_history)
 
 #----------PLOTS
 
-# Linear Velocities
+# Positions
 fig1 = plt.figure(figsize=(12,9))
+plt.plot(t_his, x_his[:,0], t_his, x_his[:,1], t_his, x_his[:,2],linewidth=3)
+plt.legend(['X-Position','Y-Position','Z-Position'],fontsize=14)
+plt.xlabel('Time',fontsize=14)
+plt.ylabel('Positions',fontsize=14)
+plt.grid(which='both')
+plt.title('Position to Input Forces and Moments',fontsize=18)
+plt.show()
+
+# Linear Velocities
+fig2 = plt.figure(figsize=(12,9))
 plt.plot(t_his, x_his[:,3], t_his, x_his[:,4], t_his, x_his[:,5],linewidth=3)
 plt.legend(['X-Component','Y-Component','Z-Component'],fontsize=14)
 plt.xlabel('Time',fontsize=14)
@@ -80,7 +87,7 @@ plt.title('Velocities Due to Input Forces and Moments',fontsize=18)
 plt.show()
 
 # Angular Velocities
-fig2 = plt.figure(figsize=(12,9))
+fig3 = plt.figure(figsize=(12,9))
 plt.plot(t_his, x_his[:,10], t_his, x_his[:,11], t_his, x_his[:,12],linewidth=3)
 plt.legend(['X-Component','Y-Component','Z-Component'],fontsize=14)
 plt.xlabel('Time',fontsize=14)
