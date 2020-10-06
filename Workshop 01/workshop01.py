@@ -12,8 +12,6 @@ class RigidBody:
     def __init__(self):
         self.m = m # mass, kg
         self.J = J # mass moment of inertia wrt COM in body-fixed frame, m^2 kg
-        #self.Jinv = Jinv # inverse of J
-        #self.x = x # state
 
     def f(self, t, x, u):
         """Evaluates f in xdot = f(t, x ,u)"""
@@ -21,7 +19,6 @@ class RigidBody:
         f_b = u[:3]
         m_b = u[3:]
         # Get position, velocity, quaternion (rotation), angular velocity 
-        #r_i = x[:3] # wrt to i-frame
         v_b = x[3:6] # wrt to i-frame
         q_ib = x[6:10] # for rotation b to i-frame
         w_b = x[10:] # wrt to b-frame
