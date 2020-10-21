@@ -28,6 +28,7 @@ u1[2] = 1
 u1[3] = 0
 u1[4] = 1
 u1[5] = 0
+
 # Turn off input
 u2 = np.zeros((6,1))
 
