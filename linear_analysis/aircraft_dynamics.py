@@ -50,7 +50,6 @@ class Aircraft:
         qdot_ib = 0.5 * quat_prod(wq_ib, q_ib)
         # d/dt(w_b)
         wdot_b = np.linalg.pinv(self.J) @ (m_b - skew(w_b) @ self.J @ w_b)
-        
      
         
         #x_dot = np.concatenate(rdot_i,vdot_b,qdot_ib,wdot_b)
@@ -84,7 +83,6 @@ class Aerodynamics:
         Mx = 0.5 * aero.rho * (aircraft.Va_norm**2) * aero.S_wing * aero.b * (aero.C_ell_0 + aero.C_ell_beta * aircraft.beta + aero.C_ell_p * p * (aero.b / (2 * aircraft.Va_norm)) + aero.C_ell_r * r * (aero.b / (2 * aircraft.Va_norm)) + aero.C_ell_delta_a * delta_a + aero.C_ell_delta_r * delta_r)
         My = 0.5 * aero.rho * (aircraft.Va_norm**2) * aero.S_wing * aero.c * (aero.C_m_0 + aero.C_m_alpha * aircraft.alpha + aero.C_m_q * q * (aero.c / (2 * aircraft.Va_norm)) + aero.C_m_delta_e * delta_e)
         Mz = 0.5 * aero.rho * (aircraft.Va_norm**2) * aero.S_wing * aero.b * (aero.C_n_0 + aero.C_n_beta * aircraft.beta + aero.C_n_p * p * (aero.b / (2 * aircraft.Va_norm)) + aero.C_n_r * r * (aero.b / (2 * aircraft.Va_norm)) + aero.C_n_delta_a * delta_a + aero.C_n_delta_r * delta_r)
-        
         
         return np.transpose(np.array([[fx, fy, fz, Mx, My, Mz]]))
 

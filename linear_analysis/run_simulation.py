@@ -30,11 +30,11 @@ drone = Aircraft(MAV.J, MAV.mass, x, wind)
 
 u1 = Aerodynamics.forces_moments(drone, delta, MAV)
 
-u2 = np.array([[1], [0], [0], [0], [0], [0]])
+u2 = np.array([[0], [0], [0], [0], [0], [0]])
 
 #----------INTEGRATION
 t = 0; 
-dt = 0.1; n = 1000
+dt = 0.001; n = 1000
 x = np.reshape(x, (13, 1))
 
 integrator = intg.RK4(dt, drone.f)
@@ -51,7 +51,7 @@ for i in range(n):
     x_history.append(x)
 
 # While no force is applied
-for i in range(n,20*n):
+for i in range(n,10*n):
     x = integrator.step(t_history[-1], x, u1)
     t = (i+1) * dt
 
