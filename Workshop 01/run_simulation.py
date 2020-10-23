@@ -22,11 +22,11 @@ x = np.concatenate([x_1,x_2,x_3,x_4])
 # Input force
 # First part
 u1 = np.zeros((6,1))
-u1[0] = 0.5
-u1[1] = 2
-u1[2] = 1
+u1[0] = 0
+u1[1] = 0
+u1[2] = 0
 u1[3] = 0
-u1[4] = 1
+u1[4] = 0
 u1[5] = 0
 
 # Turn off input

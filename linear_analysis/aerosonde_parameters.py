@@ -36,9 +36,9 @@ Jx = 0.8244 #kg m^2
 Jy = 1.135
 Jz = 1.759
 Jxz = 0.1204
-J = np.array([[Jx, 0, 0],
-             [0, Jy, 0],
-             [0, 0, Jz]])
+J = np.array([[Jx, 0, Jxz],
+              [0, Jy, 0],
+              [Jxz, 0, Jz]])
 S_wing = 0.55
 b = 2.8956
 c = 0.18994

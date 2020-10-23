@@ -2,15 +2,15 @@ import numpy as np
 from tools import *
 
 class Aircraft:
-    def __init__(self, J, m, x):
+    def __init__(self, J, m, x, wind):
         self.m = m # mass, kg
         self.J = J # mass moment of inertia wrt COM in body-fixed frame, m^2 kg
         self.state = x # State
-        self.update_velocity_data()
-        self.Va = 1
+        self.Va = np.zeros((3,1))
+        self.update_velocity_data(wind)
         self.Va_norm = np.linalg.norm(self.Va)
-        self.alpha = 0
-        self.beta = 0
+        self.alpha = 1
+        self.beta = 1
     
     def set_state(self, x):
         self.state = x
@@ -21,6 +21,7 @@ class Aircraft:
         self.Va = steady_state - gust #Air Speed
         self.Va_norm = np.linalg.norm(self.Va) #Norm of Air Speed
         self.alpha = np.arctan2(self.Va[2], self.Va[0]) #Angle of attack 
+        
         self.beta = np.arcsin(self.Va[1] / self.Va_norm) #
 
     def f(self, t, x, u): #x is the state
@@ -85,9 +86,9 @@ class Aerodynamics:
         Mz = 0.5 * aero.rho * (aircraft.Va_norm**2) * aero.S_wing * aero.b * (aero.C_n_0 + aero.C_n_beta * aircraft.beta + aero.C_n_p * p * (aero.b / (2 * aircraft.Va_norm)) + aero.C_n_r * r * (aero.b / (2 * aircraft.Va_norm)) + aero.C_n_delta_a * delta_a + aero.C_n_delta_r * delta_r)
         
         
-        return np.array([[fx, fy, fz, Mx, My, Mz]]).T
+        return np.transpose(np.array([[fx, fy, fz, Mx, My, Mz]]))
 
-    #ask dirk what S to use
+     #ask dirk what S to use
      #please ask dirk if Va is a norm or a component
 
     
