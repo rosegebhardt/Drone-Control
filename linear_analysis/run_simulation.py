@@ -8,7 +8,7 @@ import aerosonde_parameters as MAV
 pn = 0
 pe = 0
 pd = 0
-u = 0
+u = 1
 v = 0
 w = 0
 e0 = 1
@@ -19,7 +19,9 @@ p = 0
 q = 0
 r = 0
 x = np.array([pn, pe, pd, u, v, w, e0, e1, e2, e3, p, q, r])
-wind = np.array([[3], [0], [0], [0], [0], [0]])
+
+
+wind = np.array([[0], [0], [0], [0], [0], [0]])
 
 #establish input
 delta = np.array([0, 0, 0, 0])
@@ -27,10 +29,8 @@ delta = np.array([0, 0, 0, 0])
 #establish aircraft for simulation
 drone = Aircraft(MAV.J, MAV.mass, x, wind)
 
-
-u1 = Aerodynamics.forces_moments(drone, delta, MAV)
-
-u2 = np.array([[0], [0], [0], [0], [0], [0]])
+u1 = Aerodynamics.forces_moments(drone, delta, MAV) #Aerodynamic enviornment
+#u1 = np.zeros((6,1))
 
 #----------INTEGRATION
 t = 0; 
@@ -44,7 +44,7 @@ x_history = [x]
 
 # While force is applied
 for i in range(n):
-    x = integrator.step(t, x, u1 + u2)
+    x = integrator.step(t, x, u1)
     t = (i+1) * dt
 
     t_history.append(t)

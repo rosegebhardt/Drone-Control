@@ -5,7 +5,7 @@ class Aircraft:
     def __init__(self, J, m, x, wind):
         self.m = m # mass, kg
         self.J = J # mass moment of inertia wrt COM in body-fixed frame, m^2 kg
-        self.state = x # State
+        self.x = x # State
         self.Va = np.zeros((3,1))
         self.update_velocity_data(wind)
         self.Va_norm = np.linalg.norm(self.Va)
@@ -13,16 +13,17 @@ class Aircraft:
         self.beta = 1
     
     def set_state(self, x):
-        self.state = x
+        self.x = x
         
     def update_velocity_data(self, wind=np.zeros((6,1))):
         steady_state = wind[0:3]
         gust = wind[3:6]
-        self.Va = steady_state - gust #Air Speed
+        Vw = (rot_from_quat(self.x[6:10]) @ steady_state) + gust #Wind vector
+        Vg = self.x[3:6] #Ground speed
+        self.Va = Vg - Vw #Air Speed relative to body frame
         self.Va_norm = np.linalg.norm(self.Va) #Norm of Air Speed
         self.alpha = np.arctan2(self.Va[2], self.Va[0]) #Angle of attack 
-        
-        self.beta = np.arcsin(self.Va[1] / self.Va_norm) #
+        self.beta = np.arcsin(self.Va[1] / self.Va_norm) #Slip angle
 
     def f(self, t, x, u): #x is the state
         """Evaluates f in xdot = f(t, x ,u)"""
@@ -61,10 +62,10 @@ class Aerodynamics:
         R_sb = np.array([[np.cos(aircraft.alpha), -1*np.sin(aircraft.alpha)],#2x2 rotation matrix used to get aerodynamic forces into fx and fz (body frame)
                          [np.sin(aircraft.alpha), np.cos(aircraft.alpha)]])
         
-        psi, theta, phi = get_euler_angles_from_rot(rot_from_quat(aircraft.state[6:10]))
-        p = aircraft.state[10] #roll rate
-        q = aircraft.state[11] #pitch rate
-        r = aircraft.state[12] #yaw rate
+        psi, theta, phi = get_euler_angles_from_rot(rot_from_quat(aircraft.x[6:10]))
+        p = aircraft.x[10] #roll rate
+        q = aircraft.x[11] #pitch rate
+        r = aircraft.x[12] #yaw rate
             
         delta_e = delta[0]
         delta_a = delta[1]
