@@ -46,3 +46,8 @@ def quat_from_ypr(y, p, r):
         [np.sin(phi2)*np.sin(psi2)*np.cos(theta2) + np.sin(theta2)*np.cos(phi2)*np.cos(psi2)], 
         [-np.sin(phi2)*np.sin(theta2)*np.cos(psi2) + np.sin(psi2)*np.cos(phi2)*np.cos(theta2)]
         ])
+
+def ypr_from_quat(q):
+    rot = rot_from_quat(q)
+    (psi, theta, phi) = get_euler_angles_from_rot(rot)
+    return (psi, theta, phi) 

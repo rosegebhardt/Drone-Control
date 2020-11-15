@@ -78,17 +78,15 @@ class Aerodynamics:
                                 [F_lift]])
         
         #Forces in the body frame
-        fx = np.reshape(( R_sb @ (-1 * aero_forces) ), (2, 1))[0]
+        fx = np.reshape(( R_sb @ (-1 * aero_forces) ), (2, ))[0]
         fy = 0.5 * aero.rho * (aircraft.Va_norm**2) * aero.S_wing * (aero.C_Y_0 + aero.C_Y_beta * aircraft.beta + aero.C_Y_p * p * (aero.b / (2 * aircraft.Va_norm)) + aero.C_Y_r * r * (aero.b / (2 * aircraft.Va_norm)) + aero.C_Y_delta_a * delta_a + aero.C_Y_delta_r * delta_r)
         fz = np.reshape(( R_sb @ (-1 * aero_forces) ), (2, ))[1]
         Mx = 0.5 * aero.rho * (aircraft.Va_norm**2) * aero.S_wing * aero.b * (aero.C_ell_0 + aero.C_ell_beta * aircraft.beta + aero.C_ell_p * p * (aero.b / (2 * aircraft.Va_norm)) + aero.C_ell_r * r * (aero.b / (2 * aircraft.Va_norm)) + aero.C_ell_delta_a * delta_a + aero.C_ell_delta_r * delta_r)
         My = 0.5 * aero.rho * (aircraft.Va_norm**2) * aero.S_wing * aero.c * (aero.C_m_0 + aero.C_m_alpha * aircraft.alpha + aero.C_m_q * q * (aero.c / (2 * aircraft.Va_norm)) + aero.C_m_delta_e * delta_e)
         Mz = 0.5 * aero.rho * (aircraft.Va_norm**2) * aero.S_wing * aero.b * (aero.C_n_0 + aero.C_n_beta * aircraft.beta + aero.C_n_p * p * (aero.b / (2 * aircraft.Va_norm)) + aero.C_n_r * r * (aero.b / (2 * aircraft.Va_norm)) + aero.C_n_delta_a * delta_a + aero.C_n_delta_r * delta_r)
         
+        #return np.transpose(np.array([[fx, fy, fz, Mx, My, Mz]]))
         return np.transpose(np.array([[fx, fy, fz, Mx, My, Mz]]))
-
-     #ask dirk what S to use
-     #please ask dirk if Va is a norm or a component
 
     
     

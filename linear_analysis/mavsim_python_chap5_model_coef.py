@@ -44,18 +44,21 @@ Ts = 0.020000
 [lam_alat,x_alat] = np.linalg.eig(A_lat)
 #[lam_blat,x_blat] = np.linalg.eig(B_lat)
 
-import matplotlib.pyplot as plt
-
-fig1 = plt.figure(figsize=(12,9))
-X_alon = [x.real for x in lam_alon]
-Y_alon = [x.imag for x in lam_alon]
-plt.scatter(X_alon,Y_alon, marker='x',s=100)
-#plt.xline(0)
-plt.show()
-
-fig2 = plt.figure(figsize=(12,9))
-X_alat = [x.real for x in lam_alat]
-Y_alat = [x.imag for x in lam_alat]
-plt.scatter(X_alat,Y_alat,marker='x',s=100)
-#plt.xline(0)
-plt.show()
+# =============================================================================
+# import matplotlib.pyplot as plt
+# 
+# fig1 = plt.figure(figsize=(12,9))
+# X_alon = [x.real for x in lam_alon]
+# Y_alon = [x.imag for x in lam_alon]
+# plt.scatter(X_alon,Y_alon, marker='x',s=100)
+# #plt.plot((), (y1, y2), 'k-')
+# plt.axvline(x=0)
+# plt.show()
+# 
+# fig2 = plt.figure(figsize=(12,9))
+# X_alat = [x.real for x in lam_alat]
+# Y_alat = [x.imag for x in lam_alat]
+# plt.scatter(X_alat,Y_alat,marker='x',s=100)
+# #plt.xline(0)
+# plt.show()
+# =============================================================================

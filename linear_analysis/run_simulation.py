@@ -3,8 +3,10 @@ from aircraft_dynamics import *
 import integrators as intg
 import matplotlib.pyplot as plt
 import aerosonde_parameters as MAV
+import mavsim_python_chap5_model_coef as ch5
 
 #establish initial state
+'''
 pn = 0
 pe = 0
 pd = 0
@@ -19,22 +21,31 @@ p = 0
 q = 0
 r = 0
 x = np.array([pn, pe, pd, u, v, w, e0, e1, e2, e3, p, q, r])
-
+'''
+x = ch5.x_trim.flatten()
 
 wind = np.array([[0], [0], [0], [0], [0], [0]])
 
+'''
 #establish input
-delta = np.array([0, 0, 0, 0])
+elevator = 0
+aileron = 0
+rudder = 0
+thrust = 0
+delta = np.array([elevator,aileron,rudder,thrust])
+'''
+
+delta = ch5.u_trim.flatten()
 
 #establish aircraft for simulation
 drone = Aircraft(MAV.J, MAV.mass, x, wind)
 
 u1 = Aerodynamics.forces_moments(drone, delta, MAV) #Aerodynamic enviornment
-#u1 = np.zeros((6,1))
+#u2 = Aerodynamics.forces_moments(drone, np.array([0, 0, 0, 0]), MAV)
 
 #----------INTEGRATION
 t = 0; 
-dt = 0.001; n = 1000
+dt = 0.0001; n = 500
 x = np.reshape(x, (13, 1))
 
 integrator = intg.RK4(dt, drone.f)

@@ -14,7 +14,6 @@ dt = 1; n = 100
 
 integrator = intg.RK4(dt, f)
 
-
 t_history = [0]
 x_history = [x]
 
